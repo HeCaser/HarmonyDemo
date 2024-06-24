@@ -1,4 +1,4 @@
-import { PwdCheck } from './pwd_check/PwdCheckComponent';
+import { DialogDemo } from './dialog/DialogDemo';
 
 @Entry
 @Component
@@ -6,14 +6,22 @@ struct Index {
   @State message: string = 'Hello World';
 
   build() {
-    Row() {
+    Column() {
       // PwdCheckComponent(){
       //
       // }
 
-      PwdCheck()
-    }
+      Button("Test").onClick(() => {
+        this.showDialog()
+      })
+      DialogDemo().backgroundColor('red')
+    }.width(100)
 
   }
+
+  showDialog() {
+
+  }
+
 }
 
