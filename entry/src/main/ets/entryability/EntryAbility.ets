@@ -2,10 +2,7 @@ import { AbilityConstant, UIAbility, Want } from '@kit.AbilityKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
 
-/**
- * App 前后台切换触发阈值
- * 整理逻辑参见雪球工程中 com.xueqiu.android.base.AppEngine 类
- */
+
 const APP_SESSION_CONTINUE_MILLIS: number = 1 * 60 * 1000
 
 function getMills() {
@@ -52,8 +49,11 @@ export default class EntryAbility extends UIAbility {
     this.mInBackgroundTimePoint = getMills()
   }
 
+  /**
+   * 首次启动 & app 回到前台调用此方法
+   * 逻辑参见雪球工程 com.xueqiu.android.base.AppEngine 类
+   */
   executedTasksWhenAppInForeground() {
-    AlertDialog.show({message:'触发'})
-    console.log("hepan 触发")
+    console.log("hepan 前后台切换触发")
   }
 }
