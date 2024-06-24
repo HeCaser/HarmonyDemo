@@ -1,3 +1,5 @@
+import { PwdCheck } from './pwd_check/PwdCheckComponent';
+
 @Entry
 @Component
 struct Index {
@@ -5,13 +7,13 @@ struct Index {
 
   build() {
     Row() {
-      Column() {
-        Text(this.message)
-          .fontSize(50)
-          .fontWeight(FontWeight.Bold)
-      }
-      .width('100%')
+      // PwdCheckComponent(){
+      //
+      // }
+
+      PwdCheck()
     }
-    .height('100%')
+
   }
 }
+
