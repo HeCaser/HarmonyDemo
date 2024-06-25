@@ -16,9 +16,12 @@ export struct PwdGridView {
 
 @Component
 struct Item {
-  lastIndex: number = 4
+
   value: string = ''
   index: number = 0
+
+  lastIndex: number = 4
+  borderW: number = 1
 
   build() {
     Text(this.value)
@@ -26,10 +29,10 @@ struct Item {
       .textAlign(TextAlign.Center)
       .height('100%')
       .borderWidth({
-        top: 1,
-        bottom: 1,
-        right: this.index == this.lastIndex ? 1 : 0,
-        left: 1
+        top: this.borderW,
+        bottom: this.borderW,
+        right: this.index == this.lastIndex ? this.borderW : 0,
+        left: this.borderW
       })
       .borderColor('#ddd')
   }
