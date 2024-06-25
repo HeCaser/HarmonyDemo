@@ -1,40 +1,16 @@
-import { DialogDemo } from './dialog/DialogDemo';
-import { router } from '@kit.ArkUI';
+import { PwdGridView } from './pwd_check/view/PwdGridView';
 
 @Entry
 @Component
 struct Index {
   @State message: string = 'Hello World';
+  @State pwd: string = '103456';
 
   build() {
     Column() {
-      // PwdCheckComponent(){
-      //
-      // }
-
-      Button("Test").onClick(() => {
-        // this.showDialog()
-
-        router.pushUrl({
-          url: "pages/router/Page2", params: {
-            callBack: (type: number, dataString: string) => {
-              console.log("hepan 回调 "+type)
-            },
-            test: '00'
-          }
-        })
-      })
-      DialogDemo()
-    }.width(100)
-
+     PwdGridView({pwd:this.pwd}).margin({left:12,right:12}).height(40)
+    }.width('100%')
   }
 
-  showDialog() {
-
-  }
-
-  onAppear(event: () => void): CommonAttribute {
-    return super.onAppear(event)
-  }
 }
 
