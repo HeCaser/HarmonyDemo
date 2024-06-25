@@ -28,6 +28,7 @@ struct Item {
       .layoutWeight(1)
       .textAlign(TextAlign.Center)
       .height('100%')
+      .fontWeight(500)
       .borderWidth({
         top: this.borderW,
         bottom: this.borderW,
