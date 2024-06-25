@@ -1,10 +1,7 @@
 
-/**
- * 密码验证页面
- */
 @Entry
 @Component
-export struct PwdCheck {
+export struct GesturePwdCheck {
   @State message: string = 'Hello World';
 
   build() {

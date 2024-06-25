@@ -8,7 +8,7 @@ export struct DialogDemo {
       console.log("hepan 外部取消")
     },
     // 定义为 true , 弹框可以展示为全屏
-    customStyle: true
+    customStyle: true,
   })
 
   build() {

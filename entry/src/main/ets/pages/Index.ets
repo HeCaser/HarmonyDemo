@@ -1,4 +1,5 @@
 import { DialogDemo } from './dialog/DialogDemo';
+import { router } from '@kit.ArkUI';
 
 @Entry
 @Component
@@ -12,9 +13,18 @@ struct Index {
       // }
 
       Button("Test").onClick(() => {
-        this.showDialog()
+        // this.showDialog()
+
+        router.pushUrl({
+          url: "pages/router/Page2", params: {
+            callBack: (type: number, dataString: string) => {
+              console.log("hepan 回调 "+type)
+            },
+            test: '00'
+          }
+        })
       })
-      DialogDemo().backgroundColor('red')
+      DialogDemo()
     }.width(100)
 
   }
@@ -23,5 +33,8 @@ struct Index {
 
   }
 
+  onAppear(event: () => void): CommonAttribute {
+    return super.onAppear(event)
+  }
 }
 
