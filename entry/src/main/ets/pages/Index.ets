@@ -11,7 +11,9 @@ struct Index {
   test() {
 
   }
-
+  onBackPress(): boolean | void {
+    return true
+  }
   build() {
     Column() {
       Button("Test").onClick(() => {

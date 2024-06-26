@@ -5,7 +5,6 @@ import { PwdGridView } from './view/PwdGridView';
 /**
  * 密码验证页面
  */
-@Entry
 @Component
 export struct PwdCheckPage {
   @State message: string = 'Hello World';
@@ -29,6 +28,8 @@ export struct PwdCheckPage {
     }
 
   }
+
+
 
   build() {
     Column() {
