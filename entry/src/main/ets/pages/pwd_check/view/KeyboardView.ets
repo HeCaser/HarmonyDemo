@@ -72,9 +72,9 @@ export struct KeyboardView {
           this.invokeItemClick(KeyBoardType.DELETE, "")
         })
       }.columnsTemplate('1fr 1fr 1fr')
-      .rowsTemplate('1fr 1fr 1fr')
+      .rowsTemplate('1fr')
       .width('100%')
-      .height('75%')
+      .height('25%')
 
     }.width('100%')
     .height('100%')
