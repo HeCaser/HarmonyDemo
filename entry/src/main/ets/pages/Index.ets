@@ -11,16 +11,20 @@ struct Index {
   test() {
 
   }
+
   onBackPress(): boolean | void {
     return true
   }
+
   build() {
     Column() {
+
       Button("Test").onClick(() => {
         this.test()
-      }).width(100)
+      }).width(100).id('b')
 
       PwdCheckPage().layoutWeight(1)
+      LoadingProgress().width('100%').height(80).enableLoading(true).position({ y: 300 })
     }.width('100%').height('100%')
   }
 }
