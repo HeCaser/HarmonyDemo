@@ -4,23 +4,18 @@ export struct PwdGridView {
 
   build() {
     Row() {
-      Item({ value: this.pwd.charAt(0), index: 0 })
-      Item({ value: this.pwd.charAt(1), index: 1 })
-      Item({ value: this.pwd.charAt(2), index: 2 })
-      Item({ value: this.pwd.charAt(3), index: 3 })
-      Item({ value: this.pwd.charAt(4), index: 4 })
-
+      ForEach([0, 1, 2, 3, 4, 5], (item: number, index) => {
+        Item({ value: this.pwd.charAt(index), index })
+      })
     }.width('100%').height('100%').justifyContent(FlexAlign.SpaceAround)
   }
 }
 
 @Component
 struct Item {
-
-  value: string = ''
+  @Prop value: string = ''
   index: number = 0
-
-  lastIndex: number = 4
+  lastIndex: number = 5
   borderW: number = 1
 
   build() {

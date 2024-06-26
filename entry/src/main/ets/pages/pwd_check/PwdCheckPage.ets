@@ -1,59 +1,81 @@
+import { KeyBoardType, KeyboardView } from './view/KeyboardView';
+import { router } from '@kit.ArkUI';
+import { PwdGridView } from './view/PwdGridView';
 
 /**
  * 密码验证页面
  */
 @Entry
 @Component
-export struct PwdCheck {
+export struct PwdCheckPage {
   @State message: string = 'Hello World';
+  @State showPwd: string = ''
+  inputPwd: string = ''
 
-  build() {
-    Row() {
-      Test()
+  onPwdInput(type: KeyBoardType, value: string) {
+    let length = this.inputPwd.length
+    if (type == KeyBoardType.NUMBER) {
+      if (length >= 6) {
+        return
+      }
+
+      this.inputPwd = this.inputPwd + value
+      this.showPwd = this.showPwd + "*"
+    } else {
+      if (length > 0) {
+        this.inputPwd = this.inputPwd.slice(0, length - 1)
+        this.showPwd = this.showPwd.slice(0, length - 1)
+      }
     }
 
   }
-}
-
-@Component
-export struct Test {
-  //用来配置CanvasRenderingContext2D对象的参数，包括是否开启抗锯齿，true表明开启抗锯齿。
-  private settings: RenderingContextSettings = new RenderingContextSettings(true)
-  //用来创建CanvasRenderingContext2D对象，通过在canvas中调用CanvasRenderingContext2D对象来绘制。
-  private context: CanvasRenderingContext2D = new CanvasRenderingContext2D(this.settings)
-  @State start: number = 0
-  @State end: number = 0
 
   build() {
     Column() {
-
-      Flex({ direction: FlexDirection.Column, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
-
-        Circle().width(50).height(50).stroke(Color.Red)
-
-        //在canvas中调用CanvasRenderingContext2D对象。
-        Canvas(this.context)
-          .width('100%')
-          .height('100%')
-          .backgroundColor('#F5DC62')
-          .onReady(() => {
-
+      Row() {
+        Image($r('app.media.icon_l_close_day'))
+          .position({ x: 10, y: 0 })
+          .width(24)
+          .height(24)
+          .onClick(() => {
+            router.back()
           })
-
+        Text('交易密码解锁')
+          .fontSize(20)
+          .alignSelf(ItemAlign.Center)
       }
       .width('100%')
-      .height('100%').onTouch((event?: TouchEvent) => {
-        if (event) {
-          if (event.type === TouchType.Up) {
-            // this.eventType = 'Up'
-          }
-          this.start = event.touches[0].x
-          this.end = event.touches[0].y
-          this.context.clearRect(0,0,1000,1000)
-          // this.context.strokeRect(this.start, this.end, 200, 150);
-          this.context.fillRect(this.start-20, this.end-60, 40, 40);
+      .justifyContent(FlexAlign.Center)
+
+      Column() {
+        Text('验证基金交易密码')
+          .fontSize(22)
+          .textAlign(TextAlign.Center)
+          .fontWeight(FontWeight.Bold)
+          .width('100%')
+
+        Text('请输入交易密码，以验证身份')
+          .fontSize(16)
+          .textAlign(TextAlign.Center)
+          .width('100%').margin({ top: 12 })
+
+        PwdGridView({ pwd: this.showPwd }).height(46).margin({ top: 30 })
+
+        Text('台在线时长到期，需要您手动解锁查看资产，具体时长可在设置页更改')
+          .fontSize(14)
+          .textAlign(TextAlign.Center)
+          .width('100%').margin({ top: 10 })
+
+
+      }.position({ y: 90 }).margin({ left: 12, right: 12 })
+
+
+      KeyboardView({
+        onItemClick: (type, value) => {
+          this.onPwdInput(type, value)
         }
-      })
-    }
+      }).height(190)
+    }.justifyContent(FlexAlign.SpaceBetween).height('100%')
+
   }
 }

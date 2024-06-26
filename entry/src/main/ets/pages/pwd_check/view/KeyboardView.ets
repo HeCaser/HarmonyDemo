@@ -34,7 +34,7 @@ export struct KeyboardView {
               })
               .borderColor('#ddd')
           }.onClick(() => {
-            this.invokeItemClick(KeyBoardType.NUMBER,item)
+            this.invokeItemClick(KeyBoardType.NUMBER, item)
           })
 
         })
@@ -62,14 +62,14 @@ export struct KeyboardView {
             })
             .borderColor('#ddd')
         }.onClick(() => {
-          this.invokeItemClick(KeyBoardType.NUMBER,"0")
+          this.invokeItemClick(KeyBoardType.NUMBER, "0")
         })
 
         GridItem() {
           Image($r('app.media.pay_keyboard_delete')).width(30)
         }.backgroundColor('#ddd').width('100%').height('100%')
         .onClick(() => {
-          this.invokeItemClick(KeyBoardType.DELETE,"")
+          this.invokeItemClick(KeyBoardType.DELETE, "")
         })
       }.columnsTemplate('1fr 1fr 1fr')
       .rowsTemplate('1fr 1fr 1fr')
