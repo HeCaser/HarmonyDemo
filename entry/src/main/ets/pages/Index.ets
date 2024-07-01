@@ -12,9 +12,9 @@ struct Index {
 
   }
 
-  onBackPress(): boolean | void {
-    return true
-  }
+  // onBackPress(): boolean | void {
+  //   return true
+  // }
 
   build() {
     Column() {
