@@ -4,35 +4,53 @@
 @Component
 export struct GestureView {
   @State mHeight: number = 320
-  mWidth: number = -1
-  //用来配置CanvasRenderingContext2D对象的参数，包括是否开启抗锯齿，true表明开启抗锯齿。
-  private settings: RenderingContextSettings = new RenderingContextSettings(true)
-  //用来创建CanvasRenderingContext2D对象，通过在canvas中调用CanvasRenderingContext2D对象来绘制。
-  private context: CanvasRenderingContext2D = new CanvasRenderingContext2D(this.settings)
+  private mWidth: number = -1
+  // 绘制线段上下文
+  private mLineContext: CanvasRenderingContext2D = new CanvasRenderingContext2D(new RenderingContextSettings(true))
   @State start: number = 0
   @State end: number = 0
+
+  private handleTouchEvent(event?: TouchEvent) {
+    if (event) {
+      if (event) {
+        if (event.type === TouchType.Up) {
+          // this.eventType = 'Up'
+        }
+        if (event.type == TouchType.Move) {
+
+        }
+        this.start = event.touches[0].x
+        this.end = event.touches[0].y
+        this.mLineContext.clearRect(0, 0, this.mWidth, this.mHeight)
+        // // this.context.strokeRect(this.start, this.end, 200, 150);
+        // this.mLineContext.fillRect(this.start, this.end, 40, 40);
+
+        this.mLineContext.beginPath()
+        this.mLineContext.lineWidth = 1
+        this.mLineContext.lineJoin = 'miter'
+        this.mLineContext.moveTo(30, 30)
+        this.mLineContext.lineTo( this.start, this.end)
+        this.mLineContext.stroke()
+      }
+    }
+
+  }
 
   build() {
     Column() {
       // 圆圈背景
       Circles().height('100%').position({ x: 0, y: 0 }).backgroundColor('gray')
 
-      Flex({ direction: FlexDirection.Column, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
+      Column() {
+        Canvas(this.mLineContext).width('100%').height('100%')
 
-      }
-      .width('100%')
-      .height('100%').onTouch((event?: TouchEvent) => {
-        if (event) {
-          if (event.type === TouchType.Up) {
-            // this.eventType = 'Up'
-          }
-          this.start = event.touches[0].x
-          this.end = event.touches[0].y
-          this.context.clearRect(0, 0, 1000, 1000)
-          // this.context.strokeRect(this.start, this.end, 200, 150);
-          this.context.fillRect(this.start - 20, this.end - 60, 40, 40);
-        }
+      }.width('100%')
+      .height('100%')
+      .onTouch((event?: TouchEvent) => {
+        this.handleTouchEvent(event)
+
       })
+
     }.onAreaChange((oldValue: Area, newValue: Area) => {
       let cw = new Number(newValue.width).valueOf()
       this.mWidth = cw
