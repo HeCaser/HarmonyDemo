@@ -3,6 +3,8 @@
  */
 @Component
 export struct GestureView {
+  @State mHeight: number = 320
+  mWidth: number = -1
   //用来配置CanvasRenderingContext2D对象的参数，包括是否开启抗锯齿，true表明开启抗锯齿。
   private settings: RenderingContextSettings = new RenderingContextSettings(true)
   //用来创建CanvasRenderingContext2D对象，通过在canvas中调用CanvasRenderingContext2D对象来绘制。
@@ -33,15 +35,13 @@ export struct GestureView {
       })
     }.onAreaChange((oldValue: Area, newValue: Area) => {
       let cw = new Number(newValue.width).valueOf()
-      let ch = new Number(newValue.height).valueOf()
-      console.log("hepan w = " + cw + "  h = " + ch)
-    }).height(360)
+      this.mWidth = cw
+    }).height(this.mHeight)
   }
 }
 
 @Component
 struct Circles {
-
   build() {
     Column() {
 
