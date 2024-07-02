@@ -29,7 +29,7 @@ export struct GestureView {
         this.mLineContext.lineWidth = 1
         this.mLineContext.lineJoin = 'miter'
         this.mLineContext.moveTo(30, 30)
-        this.mLineContext.lineTo( this.start, this.end)
+        this.mLineContext.lineTo(this.start, this.end)
         this.mLineContext.stroke()
       }
     }
@@ -39,22 +39,22 @@ export struct GestureView {
   build() {
     Column() {
       // 圆圈背景
-      Circles().height('100%').position({ x: 0, y: 0 }).backgroundColor('gray')
-
+      Circles().height('100%').position({ x: 0, y: 0 })
       Column() {
-        Canvas(this.mLineContext).width('100%').height('100%')
+        Canvas(this.mLineContext).width('100%').height('100%').backgroundColor('translate')
 
       }.width('100%')
       .height('100%')
       .onTouch((event?: TouchEvent) => {
         this.handleTouchEvent(event)
 
-      })
+      }).backgroundColor('translate')
 
     }.onAreaChange((oldValue: Area, newValue: Area) => {
       let cw = new Number(newValue.width).valueOf()
       this.mWidth = cw
     }).height(this.mHeight)
+    .width('100%').backgroundColor('gray')
   }
 }
 
@@ -65,9 +65,19 @@ struct Circles {
 
       ForEach(["0", "1", "2"], (item: string) => {
         Row() {
-          Image($r('app.media.gesture_circle_normal')).height(40).height(40)
-          Image($r("app.media.gesture_circle_normal")).height(40).height(40)
-          Image($r('app.media.gesture_circle_normal')).height(40).height(40)
+          // fix: 切换图片背景时, 位置闪动: 图片大小不一致, 外面包裹一层固定宽高的 View
+          Row() {
+            Image($r('app.media.gesture_circle_normal')).height(40).height(40).border({ width: 2, color: Color.Pink })
+          }.height(50).width(50).justifyContent(FlexAlign.Center)
+
+          Row() {
+            Image($r('app.media.gesture_circle_selected')).height(50).height(50).border({ width: 2, color: Color.Pink })
+          }.height(50).width(50).justifyContent(FlexAlign.Center)
+
+          Row() {
+            Image($r('app.media.gesture_circle_red')).height(50).height(50).border({ width: 2, color: Color.Pink })
+          }.height(50).width(50).justifyContent(FlexAlign.Center)
+
         }.width('100%')
         .justifyContent(FlexAlign.SpaceEvenly)
       })
