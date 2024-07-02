@@ -6,7 +6,7 @@ export struct GesturePwdCheck {
 
   build() {
     Row() {
-      GestureView()
+      GestureView().width('100%')
     }
   }
 }

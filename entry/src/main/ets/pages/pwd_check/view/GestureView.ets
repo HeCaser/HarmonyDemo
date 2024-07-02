@@ -1,4 +1,3 @@
-
 /**
  * 手势 View
  */
@@ -13,19 +12,37 @@ export struct GestureView {
 
   build() {
     Column() {
+      // 圆圈背景
+      Column() {
+
+        Row() {
+          Image($r('app.media.gesture_circle_selected')).height(50)
+          Image($r("app.media.gesture_circle_normal")).height(40)
+          Image($r('app.media.gesture_circle_red')).height(50)
+        }.width('100%')
+        .justifyContent(FlexAlign.SpaceEvenly)
+
+        Row() {
+          Image($r("app.media.gesture_circle_normal")).height(40)
+          Image($r("app.media.gesture_circle_normal")).height(40)
+          Image($r("app.media.gesture_circle_normal")).height(40)
+        }.width('100%')
+        .justifyContent(FlexAlign.SpaceEvenly)
+
+        Row() {
+          Image($r("app.media.gesture_circle_normal")).height(40)
+          Image($r("app.media.gesture_circle_normal")).height(40)
+          Image($r("app.media.gesture_circle_normal")).height(40)
+        }.width('100%')
+        .justifyContent(FlexAlign.SpaceEvenly)
+
+      }.position({ x: 0, y: 0 })
+      .justifyContent(FlexAlign.SpaceEvenly)
+      .width('100%')
+      .height(300)
+      .backgroundColor('gray')
 
       Flex({ direction: FlexDirection.Column, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
-
-        Circle().width(50).height(50).stroke(Color.Red)
-
-        //在canvas中调用CanvasRenderingContext2D对象。
-        Canvas(this.context)
-          .width('100%')
-          .height('100%')
-          .backgroundColor('#F5DC62')
-          .onReady(() => {
-
-          })
 
       }
       .width('100%')
@@ -41,6 +58,10 @@ export struct GestureView {
           this.context.fillRect(this.start - 20, this.end - 60, 40, 40);
         }
       })
-    }
+    }.onAreaChange((oldValue: Area, newValue: Area) => {
+      let cw = new Number(newValue.width).valueOf()
+      let ch = new Number(newValue.height).valueOf()
+      console.log("hepan w = " + cw + "  h = " + ch)
+    }).height(360)
   }
 }
