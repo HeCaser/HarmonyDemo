@@ -13,34 +13,7 @@ export struct GestureView {
   build() {
     Column() {
       // 圆圈背景
-      Column() {
-
-        Row() {
-          Image($r('app.media.gesture_circle_selected')).height(50)
-          Image($r("app.media.gesture_circle_normal")).height(40)
-          Image($r('app.media.gesture_circle_red')).height(50)
-        }.width('100%')
-        .justifyContent(FlexAlign.SpaceEvenly)
-
-        Row() {
-          Image($r("app.media.gesture_circle_normal")).height(40)
-          Image($r("app.media.gesture_circle_normal")).height(40)
-          Image($r("app.media.gesture_circle_normal")).height(40)
-        }.width('100%')
-        .justifyContent(FlexAlign.SpaceEvenly)
-
-        Row() {
-          Image($r("app.media.gesture_circle_normal")).height(40)
-          Image($r("app.media.gesture_circle_normal")).height(40)
-          Image($r("app.media.gesture_circle_normal")).height(40)
-        }.width('100%')
-        .justifyContent(FlexAlign.SpaceEvenly)
-
-      }.position({ x: 0, y: 0 })
-      .justifyContent(FlexAlign.SpaceEvenly)
-      .width('100%')
-      .height(300)
-      .backgroundColor('gray')
+      Circles().height('100%').position({ x: 0, y: 0 }).backgroundColor('gray')
 
       Flex({ direction: FlexDirection.Column, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
 
@@ -63,5 +36,27 @@ export struct GestureView {
       let ch = new Number(newValue.height).valueOf()
       console.log("hepan w = " + cw + "  h = " + ch)
     }).height(360)
+  }
+}
+
+@Component
+struct Circles {
+
+  build() {
+    Column() {
+
+      ForEach(["0", "1", "2"], (item: string) => {
+        Row() {
+          Image($r('app.media.gesture_circle_normal')).height(40).height(40)
+          Image($r("app.media.gesture_circle_normal")).height(40).height(40)
+          Image($r('app.media.gesture_circle_normal')).height(40).height(40)
+        }.width('100%')
+        .justifyContent(FlexAlign.SpaceEvenly)
+      })
+    }
+
+    .justifyContent(FlexAlign.SpaceEvenly)
+    .width('100%')
+    .height('100%')
   }
 }
