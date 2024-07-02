@@ -2,6 +2,7 @@ import { PwdGridView } from './pwd_check/view/PwdGridView';
 import { KeyboardView } from './pwd_check/view/KeyboardView';
 import { PwdCheckPage } from './pwd_check/PwdCheckPage';
 import { PropDemo } from './basic/PropDemo';
+import { GesturePwdCheck } from './pwd_check/GestureCheckPage';
 
 @Entry
 @Component
@@ -24,7 +25,8 @@ struct Index {
         this.test()
       }).width(100)
 
-      PropDemo().layoutWeight(1)
+      GesturePwdCheck().layoutWeight(1)
+
     }.width('100%').height('100%')
   }
 }
