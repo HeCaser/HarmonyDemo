@@ -6,14 +6,14 @@ export struct GesturePwdCheck {
 
   build() {
     Row() {
-      Test()
+      GestureView()
     }
 
   }
 }
 
 @Component
-export struct Test {
+ struct GestureView {
   //用来配置CanvasRenderingContext2D对象的参数，包括是否开启抗锯齿，true表明开启抗锯齿。
   private settings: RenderingContextSettings = new RenderingContextSettings(true)
   //用来创建CanvasRenderingContext2D对象，通过在canvas中调用CanvasRenderingContext2D对象来绘制。

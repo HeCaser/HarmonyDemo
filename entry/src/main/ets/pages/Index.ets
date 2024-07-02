@@ -1,6 +1,7 @@
 import { PwdGridView } from './pwd_check/view/PwdGridView';
 import { KeyboardView } from './pwd_check/view/KeyboardView';
 import { PwdCheckPage } from './pwd_check/PwdCheckPage';
+import { PropDemo } from './basic/PropDemo';
 
 @Entry
 @Component
@@ -23,8 +24,7 @@ struct Index {
         this.test()
       }).width(100)
 
-      PwdCheckPage().layoutWeight(1)
-      LoadingProgress().width('100%').height(80).enableLoading(true).position({ y: 300 })
+      PropDemo().layoutWeight(1)
     }.width('100%').height('100%')
   }
 }
