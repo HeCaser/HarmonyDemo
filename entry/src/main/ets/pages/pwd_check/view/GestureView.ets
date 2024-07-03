@@ -120,7 +120,7 @@ export struct GestureView {
   build() {
     Column() {
       // 圆圈背景
-      Circles({ itemWidth: this.mCircleWidth }).height('100%').position({ x: 0, y: 0 })
+      Circles({ itemWidth: this.mCircleWidth, pwd: this.gesture_pwd }).height('100%').position({ x: 0, y: 0 })
       Column() {
         Canvas(this.mLineContext).width('100%').height('100%').backgroundColor('translate').onReady(() => {
           setTimeout(() => {
@@ -135,10 +135,6 @@ export struct GestureView {
 
       }).backgroundColor('translate')
 
-      Text(`${this.gesture_pwd}`).position({ x: 0, y: 0 }).onClick(() => {
-        this.gesture_pwd = ''
-      })
-
     }.onAreaChange((oldValue: Area, newValue: Area) => {
       this.handleAreaChange(newValue)
     }).height(this.mHeight)
@@ -149,28 +145,33 @@ export struct GestureView {
 @Component
 struct Circles {
   @Prop itemWidth: number = 50
+  @Prop pwd: string = ''
+
+  private isSelected(index: string) {
+    return this.pwd.indexOf(index) != -1
+  }
+
+  private getImage(index: string): string {
+    return this.isSelected(index) ? 'app.media.gesture_circle_selected' : `app.media.test`
+  }
 
   build() {
     Column() {
 
-      ForEach(["0", "1", "2"], (item: string) => {
+      ForEach([0, 1, 2], (item: number) => {
         Row() {
-          // fix: 切换图片背景时, 位置闪动: 图片大小不一致, 外面包裹一层固定宽高的 View
-          Row() {
-            Image($r('app.media.gesture_circle_normal')).height(40).height(40).border({ width: 2, color: Color.Pink })
-          }.height(this.itemWidth).width(this.itemWidth).justifyContent(FlexAlign.Center).backgroundColor('#fdd')
-
-          Row() {
-            Image($r('app.media.gesture_circle_selected')).height(50).height(50).border({ width: 2, color: Color.Pink })
-          }.height(this.itemWidth).width(this.itemWidth).justifyContent(FlexAlign.Center)
-
-          Row() {
-            Image($r('app.media.gesture_circle_red')).height(50).height(50).border({ width: 2, color: Color.Pink })
-          }.height(this.itemWidth).width(this.itemWidth).justifyContent(FlexAlign.Center)
-
+          ForEach([0, 1, 2], (child: number) => {
+            if (!this.isSelected(`${item * 3 + child}`)) {
+              Image($r(`app.media.gesture_circle_normal`)).width(this.itemWidth)
+            } else {
+              Image($r(`app.media.gesture_circle_selected`)).width(this.itemWidth)
+            }
+          })
         }.width('100%')
         .justifyContent(FlexAlign.SpaceEvenly)
       })
+
+      Text(`~~~${this.pwd}`).position({ x: 0, y: 0 })
     }
 
     .justifyContent(FlexAlign.SpaceEvenly)
@@ -178,3 +179,4 @@ struct Circles {
     .height('100%')
   }
 }
+
