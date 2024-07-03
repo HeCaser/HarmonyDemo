@@ -56,7 +56,7 @@ export struct GestureView {
     }
     this.mLineContext.beginPath()
     this.mLineContext.lineWidth = 1
-    this.mLineContext.strokeStyle = '#ddd'
+    this.mLineContext.strokeStyle = '#2062e1'
     this.mLineContext.lineJoin = 'round'
     let length = this.gesture_pwd.length
     for (let i = 0; i < length; i++) {
@@ -149,10 +149,6 @@ struct Circles {
 
   private isSelected(index: string) {
     return this.pwd.indexOf(index) != -1
-  }
-
-  private getImage(index: string): string {
-    return this.isSelected(index) ? 'app.media.gesture_circle_selected' : `app.media.test`
   }
 
   build() {
