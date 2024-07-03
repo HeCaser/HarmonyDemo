@@ -14,8 +14,6 @@ export struct GestureView {
   private mCircleCenterMap: Map<string, Point> = new Map()
   // 绘制线段上下文
   private mLineContext: CanvasRenderingContext2D = new CanvasRenderingContext2D(new RenderingContextSettings(true))
-  @State start: number = 0
-  @State end: number = 0
 
   private handleTouchEvent(event?: TouchEvent) {
     if (event) {
@@ -25,26 +23,47 @@ export struct GestureView {
         }
         if (event.type == TouchType.Move) {
           if (this.mCircleCenterMap.size > 0) {
-            this.start = event.touches[0].x
-            this.end = event.touches[0].y
+            let x = event.touches[0].x
+            let y = event.touches[0].y
+
             this.mLineContext.clearRect(0, 0, this.mWidth, this.mHeight)
 
             this.mLineContext.beginPath()
             this.mLineContext.lineWidth = 1
             this.mLineContext.lineJoin = 'round'
-            this.numbers.map((item:string)=>{
-              let point = this.mCircleCenterMap.get(item)
-              if (item =='0') {
-                this.mLineContext.moveTo(point?.x, point?.y)
-              }else{
-                this.mLineContext.lineTo(point?.x, point?.y)
-              }
-            })
-            this.mLineContext.stroke()
+            this.getCircleAreaIndex({ x, y })
+            /* this.numbers.map((item: string) => {
+               let point = this.mCircleCenterMap.get(item)
+               if (item == '0') {
+                 this.mLineContext.moveTo(point?.x, point?.y)
+               } else {
+                 this.mLineContext.lineTo(point?.x, point?.y)
+               }
+             })
+             this.mLineContext.stroke()*/
           }
         }
       }
     }
+  }
+
+  /**
+   * 当前坐标是否在 Circle 范围以内
+   * @returns 0-9 代表在某个 Circle 范围内, 否则不在
+   */
+  private getCircleAreaIndex(p: Point): string {
+    let index = ''
+    let radius = this.mCircleWidth / 2
+    this.numbers.forEach((value: string) => {
+      let point = this.mCircleCenterMap.get(value)
+      if (point) {
+        if (Math.abs(p.x - point.x) < radius && Math.abs(p.y - point.y) < radius) {
+          console.log(`hepan 处在 ${value} 范围内`)
+        }
+      }
+    })
+    return index
+
   }
 
   private handleAreaChange(newArea: Area) {
