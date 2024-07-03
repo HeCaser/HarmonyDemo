@@ -14,33 +14,32 @@ export struct GestureView {
   private mCircleCenterMap: Map<string, Point> = new Map()
   // 绘制线段上下文
   private mLineContext: CanvasRenderingContext2D = new CanvasRenderingContext2D(new RenderingContextSettings(true))
+  // 手势密码, 若需要从父组件传入,需在画布初始化完成(onCanvasReady)之后设置
+  @Prop @Watch('resetLinePath') gesture_pwd: string = ''
+  @State @Watch('resetLinePath') mTouchPoint?: Point = undefined
+  onCanvasReady?: () => void = undefined
+  onGestureStart?: () => void = undefined
+  onGestureEnd?: (pwd: string) => void = undefined
 
   private handleTouchEvent(event?: TouchEvent) {
     if (event) {
       if (event) {
+        if (event.type === TouchType.Down) {
+          this.onGestureStart?.()
+        }
         if (event.type === TouchType.Up) {
-          // this.eventType = 'Up'
+          this.mTouchPoint = undefined
+          this.onGestureEnd?.(this.gesture_pwd)
         }
         if (event.type == TouchType.Move) {
           if (this.mCircleCenterMap.size > 0) {
             let x = event.touches[0].x
             let y = event.touches[0].y
-
-            this.mLineContext.clearRect(0, 0, this.mWidth, this.mHeight)
-
-            this.mLineContext.beginPath()
-            this.mLineContext.lineWidth = 1
-            this.mLineContext.lineJoin = 'round'
-            this.getCircleAreaIndex({ x, y })
-            /* this.numbers.map((item: string) => {
-               let point = this.mCircleCenterMap.get(item)
-               if (item == '0') {
-                 this.mLineContext.moveTo(point?.x, point?.y)
-               } else {
-                 this.mLineContext.lineTo(point?.x, point?.y)
-               }
-             })
-             this.mLineContext.stroke()*/
+            this.mTouchPoint = { x, y }
+            let index = this.touchPointInCirceIndex({ x, y })
+            if (index && this.gesture_pwd.indexOf(index) == -1) {
+              this.gesture_pwd = this.gesture_pwd + index
+            }
           }
         }
       }
@@ -48,22 +47,50 @@ export struct GestureView {
   }
 
   /**
+   * 根据密码重置折线路径
+   */
+  private resetLinePath() {
+    this.mLineContext.clearRect(0, 0, this.mWidth, this.mHeight)
+    if (this.gesture_pwd.length < 1) {
+      return
+    }
+    this.mLineContext.beginPath()
+    this.mLineContext.lineWidth = 1
+    this.mLineContext.strokeStyle = '#ddd'
+    this.mLineContext.lineJoin = 'round'
+    let length = this.gesture_pwd.length
+    for (let i = 0; i < length; i++) {
+      let char = this.gesture_pwd.charAt(i)
+      let point = this.mCircleCenterMap.get(char)
+      if (i == 0) {
+        this.mLineContext.moveTo(point?.x, point?.y)
+      } else {
+        this.mLineContext.lineTo(point?.x, point?.y)
+      }
+    }
+
+    if (this.mTouchPoint) {
+      this.mLineContext.lineTo(this.mTouchPoint.x, this.mTouchPoint.y)
+    }
+    this.mLineContext.stroke()
+  }
+
+  /**
    * 当前坐标是否在 Circle 范围以内
    * @returns 0-9 代表在某个 Circle 范围内, 否则不在
    */
-  private getCircleAreaIndex(p: Point): string {
-    let index = ''
+  private touchPointInCirceIndex(p: Point): string {
     let radius = this.mCircleWidth / 2
-    this.numbers.forEach((value: string) => {
+
+    for (const value of this.numbers) {
       let point = this.mCircleCenterMap.get(value)
       if (point) {
         if (Math.abs(p.x - point.x) < radius && Math.abs(p.y - point.y) < radius) {
-          console.log(`hepan 处在 ${value} 范围内`)
+          return value
         }
       }
-    })
-    return index
-
+    }
+    return ''
   }
 
   private handleAreaChange(newArea: Area) {
@@ -95,7 +122,11 @@ export struct GestureView {
       // 圆圈背景
       Circles({ itemWidth: this.mCircleWidth }).height('100%').position({ x: 0, y: 0 })
       Column() {
-        Canvas(this.mLineContext).width('100%').height('100%').backgroundColor('translate')
+        Canvas(this.mLineContext).width('100%').height('100%').backgroundColor('translate').onReady(() => {
+          setTimeout(() => {
+            this.onCanvasReady?.()
+          }, 200)
+        })
 
       }.width('100%')
       .height('100%')
@@ -103,6 +134,10 @@ export struct GestureView {
         this.handleTouchEvent(event)
 
       }).backgroundColor('translate')
+
+      Text(`${this.gesture_pwd}`).position({ x: 0, y: 0 }).onClick(() => {
+        this.gesture_pwd = ''
+      })
 
     }.onAreaChange((oldValue: Area, newValue: Area) => {
       this.handleAreaChange(newValue)
