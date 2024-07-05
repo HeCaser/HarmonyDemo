@@ -1,6 +1,7 @@
 /**
  * 验证 Prop 修饰 Map
  *
+ * 结论: 可以监听到 Map 内容变动(值改变, 增删)
  */
 @Component
 export struct PropDemo {
