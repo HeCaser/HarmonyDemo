@@ -1,4 +1,7 @@
 import Url from '@ohos.url'
+import { router } from '@kit.ArkUI'
+import { mapCommon } from '@kit.MapKit'
+import { HashMap } from '@kit.ArkTS'
 
 @Component
 export struct RouterURLTest {
@@ -7,20 +10,25 @@ export struct RouterURLTest {
     const URL = Url.URL.parseURL(url)
     const pathName = URL.pathname
 
-    let param = URL.params
 
+    let params: Record<string, string> = {}
 
-    for (const item of param.entries()) {
-      console.log(`hepan item = ${JSON.stringify(item)}`);
+    for (const item of URL.params.entries()) {
+      params[item[0]] = item[1]
+
     }
 
+    router.pushUrl({
+      url: "pages/router/Page2",
+      params: params
+    })
 
   }
 
   build() {
 
     Button("Test url").onClick(() => {
-      this.test('https://danjuanfunds.com/native/GestureSetPage?a=adasa&b=我是中文')
+      this.test('https://danjuanfunds.com/native/GestureSetPage?a=adasa&b=我是中文&a=---')
     })
   }
 }
