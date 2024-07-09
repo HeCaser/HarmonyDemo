@@ -168,7 +168,6 @@ struct Circles {
       return `app.media.gesture_circle_red`
     }
     return 'app.media.gesture_circle_selected'
-
   }
 
   build() {

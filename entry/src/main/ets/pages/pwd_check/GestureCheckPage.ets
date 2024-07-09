@@ -6,7 +6,8 @@ export struct GesturePwdCheck {
   @State pwd: string = ''
   @State normalHint: string = '请绘制解锁图案'
   @State errorHint: string = ''
-  @State showErrorView:boolean = false
+  @State showErrorView: boolean = false
+
   // 手势密码, 用于清空 GestureView 状态
 
   private onGesturePwdFinish(pwd: string) {
@@ -25,6 +26,7 @@ export struct GesturePwdCheck {
       this.delayClearPwd()
     }
   }
+
   aboutToAppear(): void {
     // setTimeout(()=>{
     //     this.pwd ='012345'
@@ -32,10 +34,10 @@ export struct GesturePwdCheck {
   }
 
   private delayClearPwd() {
-    setTimeout(()=>{
-        this.pwd =''
-        this.showErrorView = false
-    },1400)
+    setTimeout(() => {
+      this.pwd = ''
+      this.showErrorView = false
+    }, 1400)
 
   }
 
@@ -49,12 +51,12 @@ export struct GesturePwdCheck {
       Text(this.errorHint).margin({ top: 20 })
         .fontColor("#ff7700")
 
-      Button('清空').onClick(()=>{
-          // this.pwd=''
-        if (this.pwd.length ==5) {
-          this.pwd =''
+      Button('清空').onClick(() => {
+        // this.pwd=''
+        if (this.pwd.length == 5) {
+          this.pwd = ''
 
-        }else{
+        } else {
           this.pwd = this.pwd + this.pwd.length
         }
       })
@@ -62,7 +64,7 @@ export struct GesturePwdCheck {
 
         GestureView({
           gesture_pwd: this.pwd,
-          show_error_pattern:this.showErrorView,
+          show_error_pattern: this.showErrorView,
           onCanvasReady: () => {
           },
           onGestureEnd: (pwd: string) => {
