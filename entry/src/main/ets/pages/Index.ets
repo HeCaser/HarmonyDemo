@@ -4,15 +4,21 @@ import { PwdCheckPage } from './pwd_check/PwdCheckPage';
 import { PropDemo } from './basic/PropDemo';
 import { GesturePwdCheck } from './pwd_check/GestureCheckPage';
 import { RouterURLTest } from './basic/RouterURLTest';
+import { GesturePwdSketch } from './pwd_check/view/GesturePwdSketch';
 
 @Entry
 @Component
 struct Index {
   @State message: string = 'Hello World';
-  @State pwd: string = '*-03456';
+  @State pwd: string = '048';
 
   test() {
+    if (this.pwd.length >= 8) {
+      this.pwd = ""
 
+    } else {
+     this.pwd =  this.pwd + `${this.pwd.length}`
+    }
   }
 
   // onBackPress(): boolean | void {
@@ -26,7 +32,9 @@ struct Index {
         this.test()
       }).width(100)
 
-      GesturePwdCheck().layoutWeight(1)
+      GesturePwdSketch({
+        highlight_pwd: this.pwd
+      }).layoutWeight(1)
       // RouterURLTest().layoutWeight(1)
 
     }.width('100%').height('100%')

@@ -3,7 +3,7 @@ export struct GesturePwdSketch {
   private context: CanvasRenderingContext2D = new CanvasRenderingContext2D(new RenderingContextSettings(true))
   @State mWidth: number = 70
   // 高亮 pwd
-  @Prop @Watch('drawCircles') highlight_pwd: string = ""
+  @Prop @Watch('drawCircles') highlight_pwd: string = "048"
   private mItemSpace = 20
 
   private drawCircles() {
