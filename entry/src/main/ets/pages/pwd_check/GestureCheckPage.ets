@@ -6,12 +6,18 @@ export struct GesturePwdCheck {
   @State pwd: string = ''
   @State normalHint: string = '请绘制解锁图案'
   @State errorHint: string = ''
+  @State showErrorView:boolean = false
   // 手势密码, 用于清空 GestureView 状态
 
   private onGesturePwdFinish(pwd: string) {
     console.log(`hepan pwd 是否是 true ${!pwd}  长度 = ${pwd.length}`)
     if (!pwd || pwd.length < 4) {
       this.errorHint = '至少链接4个点，请重新绘制'
+
+      // setTimeout(()=>{
+      //
+      // },300)
+      this.showErrorView = true
       this.delayClearPwd()
     } else {
 
@@ -28,7 +34,8 @@ export struct GesturePwdCheck {
   private delayClearPwd() {
     setTimeout(()=>{
         this.pwd =''
-    },1000)
+        this.showErrorView = false
+    },1400)
 
   }
 
@@ -54,7 +61,9 @@ export struct GesturePwdCheck {
       Row() {
 
         GestureView({
-          gesture_pwd: this.pwd, onCanvasReady: () => {
+          gesture_pwd: this.pwd,
+          show_error_pattern:this.showErrorView,
+          onCanvasReady: () => {
           },
           onGestureEnd: (pwd: string) => {
             this.pwd = pwd

@@ -26,8 +26,8 @@ struct Index {
         this.test()
       }).width(100)
 
-      // GesturePwdCheck().layoutWeight(1)
-      RouterURLTest().layoutWeight(1)
+      GesturePwdCheck().layoutWeight(1)
+      // RouterURLTest().layoutWeight(1)
 
     }.width('100%').height('100%')
   }

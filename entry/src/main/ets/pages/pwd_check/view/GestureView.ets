@@ -2,6 +2,7 @@
  * 手势 View
  */
 import { Point } from '@ohos.UiTest'
+import { ifaa } from '@kit.OnlineAuthenticationKit'
 
 @Component
 export struct GestureView {
@@ -16,6 +17,7 @@ export struct GestureView {
   private mLineContext: CanvasRenderingContext2D = new CanvasRenderingContext2D(new RenderingContextSettings(true))
   // 手势密码, 若需要从父组件传入,需在画布初始化完成(onCanvasReady)之后设置
   @Prop @Watch('resetLinePath') gesture_pwd: string = ''
+  @Prop @Watch('resetLinePath') show_error_pattern?: boolean = false
   @State @Watch('resetLinePath') mTouchPoint?: Point = undefined
   onCanvasReady?: () => void = undefined
   onGestureStart?: () => void = undefined
@@ -23,23 +25,24 @@ export struct GestureView {
 
   private handleTouchEvent(event?: TouchEvent) {
     if (event) {
-      if (event) {
-        if (event.type === TouchType.Down) {
-          this.onGestureStart?.()
-        }
-        if (event.type === TouchType.Up) {
-          this.mTouchPoint = undefined
-          this.onGestureEnd?.(this.gesture_pwd)
-        }
-        if (event.type == TouchType.Move) {
-          if (this.mCircleCenterMap.size > 0) {
-            let x = event.touches[0].x
-            let y = event.touches[0].y
-            this.mTouchPoint = { x, y }
-            let index = this.touchPointInCirceIndex({ x, y })
-            if (index && this.gesture_pwd.indexOf(index) == -1) {
-              this.gesture_pwd = this.gesture_pwd + index
-            }
+      if(this.show_error_pattern){
+        return
+      }
+      if (event.type === TouchType.Down) {
+        this.onGestureStart?.()
+      }
+      if (event.type === TouchType.Up) {
+        this.mTouchPoint = undefined
+        this.onGestureEnd?.(this.gesture_pwd)
+      }
+      if (event.type == TouchType.Move) {
+        if (this.mCircleCenterMap.size > 0) {
+          let x = event.touches[0].x
+          let y = event.touches[0].y
+          this.mTouchPoint = { x, y }
+          let index = this.touchPointInCirceIndex({ x, y })
+          if (index && this.gesture_pwd.indexOf(index) == -1) {
+            this.gesture_pwd = this.gesture_pwd + index
           }
         }
       }
@@ -56,7 +59,7 @@ export struct GestureView {
     }
     this.mLineContext.beginPath()
     this.mLineContext.lineWidth = 1
-    this.mLineContext.strokeStyle = '#2062e1'
+    this.mLineContext.strokeStyle = this.show_error_pattern ? 'red' : '#2062e1'
     this.mLineContext.lineJoin = 'round'
     let length = this.gesture_pwd.length
     for (let i = 0; i < length; i++) {
@@ -120,7 +123,13 @@ export struct GestureView {
   build() {
     Column() {
       // 圆圈背景
-      Circles({ itemWidth: this.mCircleWidth, pwd: this.gesture_pwd }).height('100%').position({ x: 0, y: 0 })
+      Circles({
+        itemWidth: this.mCircleWidth,
+        pwd: this.gesture_pwd,
+        show_error_pattern: this.show_error_pattern
+      })
+        .height('100%').position({ x: 0, y: 0 })
+
       Column() {
         Canvas(this.mLineContext).width('100%').height('100%').backgroundColor('translate').onReady(() => {
           setTimeout(() => {
@@ -135,6 +144,8 @@ export struct GestureView {
 
       }).backgroundColor('translate')
 
+      Text(`--${this.show_error_pattern}`).position({ x: 0, y: 0 })
+
     }.onAreaChange((oldValue: Area, newValue: Area) => {
       this.handleAreaChange(newValue)
     }).height(this.mHeight)
@@ -146,9 +157,18 @@ export struct GestureView {
 struct Circles {
   @Prop itemWidth: number = 50
   @Prop pwd: string = ''
+  @Prop show_error_pattern?: boolean = false
 
   private isSelected(index: string) {
     return this.pwd.indexOf(index) != -1
+  }
+
+  private getImage() {
+    if (this.show_error_pattern) {
+      return `app.media.gesture_circle_red`
+    }
+    return 'app.media.gesture_circle_selected'
+
   }
 
   build() {
@@ -160,14 +180,14 @@ struct Circles {
             if (!this.isSelected(`${item * 3 + child}`)) {
               Image($r(`app.media.gesture_circle_normal`)).width(this.itemWidth)
             } else {
-              Image($r(`app.media.gesture_circle_selected`)).width(this.itemWidth)
+              Image($r(`${this.getImage()}`)).width(this.itemWidth)
             }
           })
         }.width('100%')
         .justifyContent(FlexAlign.SpaceEvenly)
       })
 
-      Text(`~~~${this.pwd}`).position({ x: 0, y: 0 })
+      // Text(`~~~${this.pwd} ${this.show_error_pattern}`).position({ x: 0, y: 0 })
     }
 
     .justifyContent(FlexAlign.SpaceEvenly)
