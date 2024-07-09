@@ -1,7 +1,7 @@
 @Component
 export struct GesturePwdSketch {
   private context: CanvasRenderingContext2D = new CanvasRenderingContext2D(new RenderingContextSettings(true))
-  @State mWidth: number = 100
+  @State mWidth: number = 60
   // 高亮 pwd
   @Prop highlight_pwd: string = ""
   private mItemSpace = 16
@@ -20,21 +20,19 @@ export struct GesturePwdSketch {
       this.context.beginPath()
       this.context.arc(x, y, 2, 0, 6.28)
       if (this.highlight_pwd.indexOf(`${i}`) !== -1) {
-        this.context.fillStyle = 'blue'
+        this.context.fillStyle = "#287DFF"
         this.context.fill()
       } else {
+        this.context.fillStyle = "#AEB0BB"
         this.context.stroke()
       }
-
     }
-
   }
 
   build() {
     Column() {
       Canvas(this.context)
         .onReady(() => {
-
           this.drawCircles()
         })
         .onAreaChange((oldArea: Area, newArea: Area) => {
@@ -42,7 +40,5 @@ export struct GesturePwdSketch {
         })
     }.width(this.mWidth)
     .height(this.mWidth)
-    .backgroundColor('gray')
-
   }
 }
