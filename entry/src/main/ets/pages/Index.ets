@@ -8,7 +8,8 @@ import { GesturePwdSketch } from './pwd_check/view/GesturePwdSketch';
 import { GestureView } from './pwd_check/view/GestureView';
 import { SimpleTitleView } from './pwd_check/view/SimpleTitleView';
 import { router } from '@kit.ArkUI';
-
+import { webview } from '@kit.ArkWeb';
+import { BusinessError } from '@kit.BasicServicesKit';
 @Entry
 @Component
 struct Index {
@@ -27,7 +28,7 @@ struct Index {
   // onBackPress(): boolean | void {
   //   return true
   // }
-
+  controller: webview.WebviewController = new webview.WebviewController();
   build() {
     Column() {
       SimpleTitleView({
@@ -47,7 +48,19 @@ struct Index {
     // GestureView({
     //   gesture_pwd:this.pwd
     // }).layoutWeight(1)
-      RouterURLTest().layoutWeight(1)
+    //   RouterURLTest().layoutWeight(1)
+
+      Button('loadUrl')
+        .onClick(() => {
+          try {
+            // 通过$rawfile加载本地资源文件。
+            this.controller.loadUrl($rawfile('index2.html'));
+          } catch (error) {
+            console.error(`ErrorCode: ${(error as BusinessError).code},  Message: ${(error as BusinessError).message}`);
+          }
+        })
+      Web({ src: 'www.example.com', controller: this.controller }).javaScriptAccess(true)
+
 
     }.width('100%').height('100%')
   }
