@@ -2,5 +2,16 @@
 <html>
 <head><title>详情页</title></head>
 <body><h1>欢迎来到详情页！</h1>
-<p>您已成功从首页跳转到此页，并在URL中添加了参数。</p></body>
+<p>您已成功从首页跳转到此页，并在URL中添加了参数。</p>
+<div id="currentUrl"></div>
+
+<script>
+    // 使用JavaScript获取当前页面的URL
+    var currentUrl = window.location.href;
+
+    // 将这个URL值插入到id为"currentUrl"的div元素中
+    document.getElementById("currentUrl").innerText = "当前页面的URL是: " + currentUrl;
+</script>
+
+</body>
 </html>
