@@ -22,13 +22,12 @@ export struct RouterURLTest {
       url: "pages/router/Page2",
       params: params
     })
-
   }
 
   build() {
 
     Button("Test url").onClick(() => {
-      this.test('https://danjuanfunds.com/native/GestureSetPage?a=adasa&b=我是中文&a=---')
+      this.test('https://danjuanfunds.com/native/GestureSetPage?a=adasa&b=我是中文&c=1')
     })
   }
 }

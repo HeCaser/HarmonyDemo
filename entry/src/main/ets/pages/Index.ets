@@ -44,10 +44,10 @@ struct Index {
         this.test()
       }).width(100)
 
-    GestureView({
-      gesture_pwd:this.pwd
-    }).layoutWeight(1)
-      // RouterURLTest().layoutWeight(1)
+    // GestureView({
+    //   gesture_pwd:this.pwd
+    // }).layoutWeight(1)
+      RouterURLTest().layoutWeight(1)
 
     }.width('100%').height('100%')
   }

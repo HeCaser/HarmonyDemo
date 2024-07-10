@@ -33,6 +33,10 @@ struct Page2 {
       let p = param as Record<string,string>
       let a = p.a
       console.log(`hepan 参数 = ${JSON.stringify(a)}`);
+
+      // c == "1", 字符串类型
+      let c = p.c
+
     }
   }
 
