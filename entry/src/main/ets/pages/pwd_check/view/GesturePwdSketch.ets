@@ -1,9 +1,9 @@
 @Component
 export struct GesturePwdSketch {
   private context: CanvasRenderingContext2D = new CanvasRenderingContext2D(new RenderingContextSettings(true))
-  @State mWidth: number = 70
+  @State mWidth: number =60
   // 高亮 pwd
-  @Prop @Watch('drawCircles') highlight_pwd: string = "048"
+  @Prop @Watch('drawCircles') highlight_pwd: string = ""
   private mItemSpace = 20
 
   private drawCircles() {
@@ -38,7 +38,6 @@ export struct GesturePwdSketch {
         .onAreaChange((oldArea: Area, newArea: Area) => {
 
         })
-      Text(this.highlight_pwd)
     }.width(this.mWidth)
     .height(this.mWidth)
   }
