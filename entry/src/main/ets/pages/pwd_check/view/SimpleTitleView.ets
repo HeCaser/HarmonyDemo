@@ -1,3 +1,5 @@
+import { ifaa } from '@kit.OnlineAuthenticationKit'
+import { router } from '@kit.ArkUI'
 
 /**
  * 简易标题栏
@@ -17,7 +19,11 @@ export struct SimpleTitleView {
         .width(60)
         .height(60)
         .onClick(() => {
-          this.onBackClick?.()
+          if (this.onBackClick) {
+            this.onBackClick()
+          } else {
+            router.back()
+          }
         })
         .id('back')
         .objectFit(ImageFit.None)
