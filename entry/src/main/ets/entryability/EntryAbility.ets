@@ -1,6 +1,7 @@
 import { AbilityConstant, UIAbility, Want } from '@kit.AbilityKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
+import { DbUtil } from '../pages/util/DbUtil';
 
 
 const APP_SESSION_CONTINUE_MILLIS: number = 1 * 60 * 1000
@@ -30,6 +31,8 @@ export default class EntryAbility extends UIAbility {
       }
       hilog.info(0x0000, 'testTag', 'Succeeded in loading the content. Data: %{public}s', JSON.stringify(data) ?? '');
     });
+
+    DbUtil.init(this.context)
   }
 
   onWindowStageDestroy(): void {
