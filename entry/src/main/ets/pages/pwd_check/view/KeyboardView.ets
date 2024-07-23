@@ -47,10 +47,7 @@ export struct KeyboardView {
               .onTouch((event?: TouchEvent) => {
                 this.handleTouchEvent(event, item)
               })
-              .clickEffect({
-                level: ClickEffectLevel.HEAVY,
-                scale: 0.4
-              })
+
           }.backgroundColor(this.mSelectIndex == item ? '#ddd' : '')
 
         })
@@ -73,10 +70,7 @@ export struct KeyboardView {
             .onTouch((event?: TouchEvent) => {
               this.handleTouchEvent(event, "0")
             })
-            .clickEffect({
-              level: ClickEffectLevel.HEAVY,
-              scale: 0.4
-            })
+
 
         }.backgroundColor(this.mSelectIndex === "0" ? '#ddd' : '')
 
@@ -114,5 +108,9 @@ struct Item {
       .textAlign(TextAlign.Center)
       .fontWeight(500)
       .fontSize(18)
+      .clickEffect({
+        level: ClickEffectLevel.HEAVY,
+        scale: 0.4
+      })
   }
 }
