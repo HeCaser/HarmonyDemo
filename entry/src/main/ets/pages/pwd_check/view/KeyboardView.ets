@@ -15,16 +15,16 @@ export struct KeyboardView {
     }
   }
 
-private handleTouchEvent(event: TouchEvent|undefined, value:string) {
-  if (event) {
-    if (event.type == TouchType.Down) {
-      this.mSelectIndex = value
-    }
-    if (event.type == TouchType.Up) {
-      this.mSelectIndex = ""
+  private handleTouchEvent(event: TouchEvent | undefined, value: string) {
+    if (event) {
+      if (event.type == TouchType.Down) {
+        this.mSelectIndex = value
+      }
+      if (event.type == TouchType.Up) {
+        this.mSelectIndex = ""
+      }
     }
   }
-}
 
   build() {
     Column() {
@@ -45,7 +45,7 @@ private handleTouchEvent(event: TouchEvent|undefined, value:string) {
                 this.invokeItemClick(KeyBoardType.NUMBER, item)
               })
               .onTouch((event?: TouchEvent) => {
-                this.handleTouchEvent(event,item)
+                this.handleTouchEvent(event, item)
               })
               .clickEffect({
                 level: ClickEffectLevel.HEAVY,
@@ -71,7 +71,7 @@ private handleTouchEvent(event: TouchEvent|undefined, value:string) {
               this.invokeItemClick(KeyBoardType.NUMBER, "0")
             })
             .onTouch((event?: TouchEvent) => {
-              this.handleTouchEvent(event,"0")
+              this.handleTouchEvent(event, "0")
             })
             .clickEffect({
               level: ClickEffectLevel.HEAVY,
@@ -81,7 +81,13 @@ private handleTouchEvent(event: TouchEvent|undefined, value:string) {
         }.backgroundColor(this.mSelectIndex === "0" ? '#ddd' : '')
 
         GridItem() {
-          Image($r('app.media.pay_keyboard_delete')).width(30)
+          Row() {
+            Image($r('app.media.pay_keyboard_delete')).width(30)
+          }.width('100%').height('100%').clickEffect({
+            level: ClickEffectLevel.HEAVY,
+            scale: 0.4
+          }).justifyContent(FlexAlign.Center)
+
         }.backgroundColor('#ddd').width('100%').height('100%')
         .onClick(() => {
           this.invokeItemClick(KeyBoardType.DELETE, "")
