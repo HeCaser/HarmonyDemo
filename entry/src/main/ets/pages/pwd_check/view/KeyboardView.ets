@@ -9,15 +9,25 @@ export struct KeyboardView {
   onItemClick?: (type: KeyBoardType, value: string) => void = undefined
   @State mSelectIndex: string = ""
 
-  invokeItemClick(type: KeyBoardType, value: string) {
+  private invokeItemClick(type: KeyBoardType, value: string) {
     if (this.onItemClick) {
       this.onItemClick(type, value)
     }
   }
 
+private handleTouchEvent(event: TouchEvent|undefined, value:string) {
+  if (event) {
+    if (event.type == TouchType.Down) {
+      this.mSelectIndex = value
+    }
+    if (event.type == TouchType.Up) {
+      this.mSelectIndex = ""
+    }
+  }
+}
+
   build() {
     Column() {
-
 
       ForEach([0, 1, 2, 3, 4], (item: number) => {
         Line().backgroundColor('#ddd').width('100%').height(1).position({ y: `${25 * item}%` })
@@ -26,30 +36,16 @@ export struct KeyboardView {
         }
       })
 
-
       // 1-9
       Grid() {
         ForEach(this.numbers, (item: string, index: number) => {
           GridItem() {
-            Text(item)
-              .height('100%')
-              .width('100%')
-              .textAlign(TextAlign.Center)
-              .fontWeight(500)
-              .fontSize(18)
+            Item({ value: item })
               .onClick(() => {
                 this.invokeItemClick(KeyBoardType.NUMBER, item)
               })
               .onTouch((event?: TouchEvent) => {
-                if (event) {
-                  if (event.type == TouchType.Down) {
-                    this.mSelectIndex = item
-                  }
-                  if (event.type == TouchType.Up) {
-                    this.mSelectIndex = ""
-
-                  }
-                }
+                this.handleTouchEvent(event,item)
               })
               .clickEffect({
                 level: ClickEffectLevel.HEAVY,
@@ -70,25 +66,12 @@ export struct KeyboardView {
         }.backgroundColor('#ddd').width('100%').height('100%')
 
         GridItem() {
-          Text("0")
-            .height('100%')
-            .width('100%')
-            .textAlign(TextAlign.Center)
-            .fontWeight(500)
-            .fontSize(18)
+          Item({ value: "0" })
             .onClick(() => {
               this.invokeItemClick(KeyBoardType.NUMBER, "0")
             })
             .onTouch((event?: TouchEvent) => {
-              if (event) {
-                if (event.type == TouchType.Down) {
-                  this.mSelectIndex = '0'
-                }
-                if (event.type == TouchType.Up) {
-                  this.mSelectIndex = ""
-
-                }
-              }
+              this.handleTouchEvent(event,"0")
             })
             .clickEffect({
               level: ClickEffectLevel.HEAVY,
@@ -111,6 +94,19 @@ export struct KeyboardView {
 
     }.width('100%')
     .height('100%')
+  }
+}
 
+@Component
+struct Item {
+  @Prop value: string = ''
+
+  build() {
+    Text(this.value)
+      .height('100%')
+      .width('100%')
+      .textAlign(TextAlign.Center)
+      .fontWeight(500)
+      .fontSize(18)
   }
 }
