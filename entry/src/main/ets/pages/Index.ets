@@ -13,6 +13,7 @@ import { BusinessError, emitter } from '@kit.BasicServicesKit';
 import { textRecognition } from '@kit.CoreVisionKit';
 import { ImageTextRecognition } from './api_test/text_recg';
 import { DbStore } from './api_test/DbStrore';
+import { vibrator } from '@kit.SensorServiceKit';
 
 @Entry
 @Component
@@ -25,14 +26,23 @@ struct Index {
   }
 
   test() {
-    let a = 2
-    let b = 2
-    let a1 = `${a}`
-    let b1 = `${b}`
-    AlertDialog.show({
-      message: `${a1 === b1 ? '相等' : '不等'}`
-    })
-
+    try {
+      vibrator.startVibration({
+        type: 'time',
+        duration: 50,
+      }, {
+        id: 0,
+        usage: 'alarm'
+      }, (error: BusinessError) => {
+        if (error) {
+          console.error(`Failed to start vibration. Code: ${error.code}, message: ${error.message}`);
+          return;
+        }
+      });
+    } catch (err) {
+      let e: BusinessError = err as BusinessError;
+      console.error(`An unexpected error occurred. Code: ${e.code}, message: ${e.message}`);
+    }
   }
 
   // onBackPress(): boolean | void {
@@ -56,10 +66,8 @@ struct Index {
         this.test()
       }).width(100)
 
-      GestureView({
-        gesture_pwd: this.pwd
-      }).layoutWeight(1)
-      RouterURLTest().layoutWeight(1)
+      GestureView().height(200)
+      // RouterURLTest().layoutWeight(1)
 
 
     }.width('100%').height('100%')
