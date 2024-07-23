@@ -8,6 +8,7 @@ export struct KeyboardView {
   @State numbers: string[] = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   onItemClick?: (type: KeyBoardType, value: string) => void = undefined
   @State mSelectIndex: string = ""
+
   invokeItemClick(type: KeyBoardType, value: string) {
     if (this.onItemClick) {
       this.onItemClick(type, value)
@@ -40,17 +41,21 @@ export struct KeyboardView {
                 this.invokeItemClick(KeyBoardType.NUMBER, item)
               })
               .onTouch((event?: TouchEvent) => {
-              if (event) {
-                if (event.type == TouchType.Down) {
-                  this.mSelectIndex = item
-                }
-                if (event.type == TouchType.Up) {
-                  this.mSelectIndex = ""
+                if (event) {
+                  if (event.type == TouchType.Down) {
+                    this.mSelectIndex = item
+                  }
+                  if (event.type == TouchType.Up) {
+                    this.mSelectIndex = ""
 
+                  }
                 }
-              }
-            }).backgroundColor(this.mSelectIndex == item ? 'gray' : '')
-          }
+              })
+              .clickEffect({
+                level: ClickEffectLevel.HEAVY,
+                scale: 0.4
+              })
+          }.backgroundColor(this.mSelectIndex == item ? '#ddd' : '')
 
         })
 
@@ -74,12 +79,23 @@ export struct KeyboardView {
             .onClick(() => {
               this.invokeItemClick(KeyBoardType.NUMBER, "0")
             })
+            .onTouch((event?: TouchEvent) => {
+              if (event) {
+                if (event.type == TouchType.Down) {
+                  this.mSelectIndex = '0'
+                }
+                if (event.type == TouchType.Up) {
+                  this.mSelectIndex = ""
+
+                }
+              }
+            })
             .clickEffect({
               level: ClickEffectLevel.HEAVY,
               scale: 0.4
             })
 
-        }
+        }.backgroundColor(this.mSelectIndex === "0" ? '#ddd' : '')
 
         GridItem() {
           Image($r('app.media.pay_keyboard_delete')).width(30)
