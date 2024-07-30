@@ -19,30 +19,14 @@ import { vibrator } from '@kit.SensorServiceKit';
 @Component
 struct Index {
   @State message: string = 'Hello World';
-  @State pwd: string = '048';
+  @State pwd: string = '';
 
   aboutToAppear(): void {
 
   }
 
   test() {
-    try {
-      vibrator.startVibration({
-        type: 'time',
-        duration: 50,
-      }, {
-        id: 0,
-        usage: 'alarm'
-      }, (error: BusinessError) => {
-        if (error) {
-          console.error(`Failed to start vibration. Code: ${error.code}, message: ${error.message}`);
-          return;
-        }
-      });
-    } catch (err) {
-      let e: BusinessError = err as BusinessError;
-      console.error(`An unexpected error occurred. Code: ${e.code}, message: ${e.message}`);
-    }
+    this.pwd = ""
   }
 
   // onBackPress(): boolean | void {
@@ -66,7 +50,7 @@ struct Index {
         this.test()
       }).width(100)
 
-      GestureView().height(200)
+      KeyboardView().height(190)
       // RouterURLTest().layoutWeight(1)
 
 
