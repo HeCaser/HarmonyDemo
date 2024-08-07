@@ -40,7 +40,6 @@ export class DbUtil {
       }
 
       if (store.version === 1) {
-        console.log("hepan version =1")
 
       }
     });

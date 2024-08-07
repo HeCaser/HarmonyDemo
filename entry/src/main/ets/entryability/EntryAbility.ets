@@ -41,7 +41,7 @@ export default class EntryAbility extends UIAbility {
   }
 
   onForeground(): void {
-    console.log("hepan 前台了")
+    // console.log("hepan 前台了")
     let current = getMills()
     if (current - this.mInBackgroundTimePoint > APP_SESSION_CONTINUE_MILLIS) {
       this.executedTasksWhenAppInForeground()
@@ -57,6 +57,6 @@ export default class EntryAbility extends UIAbility {
    * 逻辑参见雪球工程 com.xueqiu.android.base.AppEngine 类
    */
   executedTasksWhenAppInForeground() {
-    console.log("hepan 前后台切换触发")
+    // console.log("hepan 前后台切换触发")
   }
 }

@@ -22,11 +22,20 @@ struct Index {
   @State pwd: string = '';
 
   aboutToAppear(): void {
-
+    // console.log("hepan 首页可见")
   }
+
+  aboutToDisappear(): void {
+    // console.log("hepan 首页消失")
+  }
+
 
   test() {
     this.pwd = ""
+
+    router.replaceUrl({
+      url: "pages/event/EmitterEvent"
+    })
   }
 
   // onBackPress(): boolean | void {
