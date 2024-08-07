@@ -1,4 +1,5 @@
 import { emitter } from '@kit.BasicServicesKit'
+import { router } from '@kit.ArkUI'
 
 /**
  * 测试鸿蒙总线事件
@@ -13,7 +14,7 @@ struct EmitterEvent {
   }
 
   aboutToDisappear(): void {
-    this.cancelTwice()
+    // this.cancelTwice()
     // console.log("hepan EmitterEvent 消失")
   }
 
@@ -40,7 +41,9 @@ struct EmitterEvent {
     emitter.on({
       eventId: 10
     }, () => {
-      console.log("hepan 接收 2")
+      router.pushUrl({
+        url:  "pages/Index"
+      })
     })
 
     emitter.once({
@@ -51,7 +54,9 @@ struct EmitterEvent {
   }
 
   /**
-   * 结论: emitter.off 会取消所有监听
+   * 结论:
+   * 1. emitter.off 会取消所有监听
+   * 2. 如果在页面消失后不取消事件, 监听逻辑依然有效, 回调依然会触发, 容易引发逻辑混乱
    */
   private cancelTwice() {
     let count = emitter.getListenerCount(10)

@@ -33,7 +33,7 @@ struct Index {
   test() {
     this.pwd = ""
 
-    router.replaceUrl({
+    router.pushUrl({
       url: "pages/event/EmitterEvent"
     })
   }
@@ -58,6 +58,10 @@ struct Index {
       Button("Test").onClick(() => {
         this.test()
       }).width(100)
+
+      Button("点击发送事件 10").onClick(() => {
+        emitter.emit({ eventId: 10 })
+      })
 
       KeyboardView().height(190)
       // RouterURLTest().layoutWeight(1)
