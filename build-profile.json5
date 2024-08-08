@@ -6,9 +6,9 @@
         "type": "HarmonyOS",
         "material": {
           "certpath": "/Users/hepan/.ohos/config/default_HarmonyDemo_EECYOMM_75eGyK7gWQ2jVOcKt3kweV8sWqUPWW-qHSc=.cer",
-          "storePassword": "0000001BD36B889C49BAFD4DCAF51DFB77CEB381E122AA36810B2FBADF25FEF882460CAC66D84CB8505E2D",
+          "storePassword": "0000001BBE9DDFC8C775ED8633650350151838B15BE3DD669CDCDAAF523660644201CA7D54411AB6C4010A",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001B25688C74910BB1074D46C82B344A1F05A933174C60D55424430A9B4BBC8CD40CF9B65200C18816",
+          "keyPassword": "0000001BBA2A1BE4F0AB279DFB0764DC4D2F70FA7F0A80BB576915EF357CCC7C3A11112C6DC1C91FF1877B",
           "profile": "/Users/hepan/.ohos/config/default_HarmonyDemo_EECYOMM_75eGyK7gWQ2jVOcKt3kweV8sWqUPWW-qHSc=.p7b",
           "signAlg": "SHA256withECDSA",
           "storeFile": "/Users/hepan/.ohos/config/default_HarmonyDemo_EECYOMM_75eGyK7gWQ2jVOcKt3kweV8sWqUPWW-qHSc=.p12"
@@ -19,7 +19,7 @@
       {
         "name": "default",
         "signingConfig": "default",
-        "compatibleSdkVersion": "4.1.0(11)",
+        "compatibleSdkVersion": "5.0.0(12)",
         "runtimeOS": "HarmonyOS",
       }
     ],
